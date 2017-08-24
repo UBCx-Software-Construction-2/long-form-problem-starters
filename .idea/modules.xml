@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BingoStarter/BingoStarter.iml" filepath="$PROJECT_DIR$/BingoStarter/BingoStarter.iml" />
       <module fileurl="file://$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" filepath="$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SillyWordGameStarter/SillyWordGameStarter.iml" filepath="$PROJECT_DIR$/SillyWordGameStarter/SillyWordGameStarter.iml" />
     </modules>
   </component>
 </project>
