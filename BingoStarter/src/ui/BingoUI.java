@@ -4,6 +4,7 @@ import model.Game;
 import model.random.NumberSquare;
 import model.PlayerCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,39 +14,43 @@ public class BingoUI {
 
     private Game game;
     private PlayerCard playerCard;
-    private int[] stampCounts;
+    private ArrayList<Integer> stampCounts;
 
     public static void main (String[] args) throws InterruptedException {
         new BingoUI();
     }
 
-
     public BingoUI() throws InterruptedException {
         game = new Game();
         playerCard = new PlayerCard();
 
-        //TODO: change addCard to new method name
+        // TODO: change addCard to new method name
         game.addCard(playerCard);
         game.addCard(new PlayerCard());
         game.addCard(new PlayerCard());
 
-        stampCounts = new int[game.getCards().size()];
+        stampCounts = new ArrayList<>(game.getCards().size());
+
+        for (int i = 0; i < game.getCards().size(); i++) {
+            stampCounts.add(0);
+        }
+
         printGreeting();
         playGame();
     }
 
-    //MODIFIES: this
-    //EFFECTS: runs game actions loop with time delay until a player has won
+    // MODIFIES: this
+    // EFFECTS: runs game actions loop with time delay until a player has won
     private void playGame() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(500);
         while(!game.isGameOver()) {
             game.callNext();
 
-            //TODO: remove this loop
+            // TODO: remove this loop
             for (PlayerCard pc : game.getCards()) {
                 pc.checkCallMatch(game.getCurrentCall());
             }
-            //end todo
+            //end TODO
 
             System.out.println("\nNumber called: " + formatBingoCall());
             TimeUnit.MILLISECONDS.sleep(1000);
@@ -56,7 +61,7 @@ public class BingoUI {
             printPlayerCard(playerCard);
             TimeUnit.MILLISECONDS.sleep(500);
 
-            //TODO: remove this call
+            // TODO: remove this call
             game.refreshGameOver();
         }
         if (playerCard.hasBingo()){
@@ -68,20 +73,20 @@ public class BingoUI {
         }
     }
 
-    //EFFECTS: returns the string of the bingo call in format Letter-Number
+    // EFFECTS: returns the string of the bingo call in format Letter-Number
     private String formatBingoCall() {
         return game.getCurrentCall().getLetter() + "-" + game.getCurrentCall().getNumber();
     }
 
-    //MODIFIES: this
-    //EFFECTS: updates stamp counts of each player and prints message if a card has been stamped
+    // MODIFIES: this
+    // EFFECTS: updates stamp counts of each player and prints message if a card has been stamped
     private void checkStampsAndUpdate() throws InterruptedException {
 
         int size = game.getCards().size();
-        for (int i=0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             int playerStampCount = game.getCards().get(i).getNumberOfSquaresStamped();
 
-            if (stampCounts[i] < playerStampCount) {
+            if (stampCounts.get(i) < playerStampCount) {
                 if (game.getCards().get(i).equals(playerCard)) {
                     System.out.println("\nSweet! You have stamped " + formatBingoCall());
                     TimeUnit.MILLISECONDS.sleep(500);
@@ -91,50 +96,58 @@ public class BingoUI {
                     TimeUnit.MILLISECONDS.sleep(500);
                 }
             }
-            stampCounts[i] = playerStampCount;
+            stampCounts.set(i,playerStampCount);
         }
     }
 
-    //EFFECTS: prints welcome greeting
+    // EFFECTS: prints welcome greeting
     private void printGreeting() throws InterruptedException {
         System.out.println("Welcome to BINGO!");
         System.out.println("Here is your bingo card: ");
         printPlayerCard(playerCard);
     }
 
-    //EFFECTS: prints player card in rows and columns where X represents a stamped square
+    // EFFECTS: prints player card in rows and columns where X represents a stamped square
     private void printPlayerCard(PlayerCard card) throws InterruptedException {
         List<NumberSquare> squares = card.getSquares();
         NumberSquare sqr;
         StringBuilder cardString = new StringBuilder();
         cardString.append("\n B   I   N   G   O");
-        for (int i=0; i < squares.size(); i++) {
+        for (int i = 0; i < squares.size(); i++) {
             sqr = squares.get(i);
             if (i % SIDE_LENGTH == 0) cardString.append("\n");
-            cardString.append(sqr.isStamped() ? " X" : formatNumber(sqr.getNumber()));
+
+            if (sqr.isStamped()) {
+                cardString.append(" X");
+            }
+            else {
+                cardString.append(formatNumber(sqr.getNumber()));
+            }
             cardString.append("  ");
         }
         System.out.println(cardString.toString());
     }
 
-    //EFFECTS: returns the i as a string with a leading space if i < 10
+    // EFFECTS: returns the i as a string with a leading space if i < 10
     private String formatNumber(int i){
-        if (i < 10){
+        if (i < 10) {
             return " " + i;
         } else {
             return "" + i;
         }
     }
 
-    //EFFECTS: returns the winning card of this game
+    // EFFECTS: returns the winning card of this game
     private PlayerCard findWinningCard(){
         PlayerCard card = new PlayerCard();
 
-        for(PlayerCard c : game.getCards()){
-            if (c.hasBingo())
+        for(PlayerCard c : game.getCards()) {
+            if (c.hasBingo()) {
                 card = c;
+            }
         }
-
         return card;
     }
+
+
 }
