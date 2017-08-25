@@ -11,12 +11,10 @@ public enum WordEntryType {
 
     private String instructions;
 
-    WordEntryType(String value) {
-        this.instructions = value;
-    }
+    WordEntryType(String value) { this.instructions = value; }
 
-    //EFFECTS: returns the instructions for this word entry type
-    public String getInstructions(){
-        return instructions;
-    }
+    // getters
+    public String getInstructions() { return instructions; }
+
+
 }

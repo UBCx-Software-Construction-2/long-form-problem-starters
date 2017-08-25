@@ -10,7 +10,7 @@ import static model.words.WordEntryType.*;
 
 public class PhraseResource {
 
-    public static final int NUM_OPTIONS = 4;
+    private static final int NUM_OPTIONS = 4;
 
     private List<List<Phrase>> resources;
 
@@ -19,15 +19,15 @@ public class PhraseResource {
         populateResources();
     }
 
-    //EFFECTS: generates a phrase list from resources at random
+    // EFFECTS: generates a phrase list from resources at random
     public List<Phrase> generatePhraseList(){
         Random r = new Random();
         int index = (r.nextInt(NUM_OPTIONS) % NUM_OPTIONS);
         return resources.get(index);
     }
 
-    //MODIFIES: this
-    //EFFECTS: adds all resources
+    // MODIFIES: this
+    // EFFECTS: adds all resources
     private void populateResources() {
         resources.add(vacationResource());
         resources.add(designPatternResource());
@@ -35,7 +35,7 @@ public class PhraseResource {
         resources.add(discoveredAnimal());
     }
 
-    //EFFECTS: returns a phrase list about a vacation
+    // EFFECTS: returns a phrase list about a vacation
     private List<Phrase> vacationResource() {
         List<Phrase> phrases = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class PhraseResource {
         return phrases;
     }
 
-    //EFFECTS: returns a phrase list about a design pattern
+    // EFFECTS: returns a phrase list about a design pattern
     private List<Phrase> designPatternResource() {
         List<Phrase> phrases = new ArrayList<>();
 
@@ -129,7 +129,7 @@ public class PhraseResource {
         return phrases;
     }
 
-    //EFFECTS: returns a phrase list about swimming
+    // EFFECTS: returns a phrase list about swimming
     private List<Phrase> swimmingResource() {
         List<Phrase> phrases = new ArrayList<>();
 
@@ -183,7 +183,7 @@ public class PhraseResource {
         return phrases;
     }
 
-    //EFFECTS: returns a phrase list about a newly discovered animal
+    // EFFECTS: returns a phrase list about a newly discovered animal
     private List<Phrase> discoveredAnimal() {
         List<Phrase> phrases = new ArrayList<>();
 
@@ -222,6 +222,9 @@ public class PhraseResource {
         p = new Phrase("The lead candidate for this creature's name is the wild .");
         p.addWordEntry(NOUN, 10);
         phrases.add(p);
+
         return phrases;
     }
+
+
 }

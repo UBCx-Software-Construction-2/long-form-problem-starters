@@ -3,7 +3,6 @@ package ui;
 import model.SillyWordGame;
 import model.Phrase;
 import model.words.WordEntry;
-
 import java.util.Scanner;
 
 public class SillyWordGameUI {
@@ -15,17 +14,17 @@ public class SillyWordGameUI {
         new SillyWordGameUI(new PhraseResource());
     }
 
-    public SillyWordGameUI(PhraseResource pr) {
+    private SillyWordGameUI(PhraseResource pr) {
         s = new Scanner(System.in);
         wordGame = new SillyWordGame(pr.generatePhraseList());
         userInteraction();
         printSillyGame();
     }
 
-    //MODIFIES: this
-    //EFFECTS: fills each needed word entry with user input
-    private void userInteraction(){
-        //TODO: refactor this loop to use the iterator pattern you just implemented
+    // MODIFIES: this
+    // EFFECTS: fills each required word entry with user input
+    private void userInteraction() {
+        // TODO: refactor this loop to use the iterator pattern you just implemented
         while(wordGame.needMoreWords()){
             Phrase p = wordGame.getNextPhraseNeedingWord();
 
@@ -34,22 +33,23 @@ public class SillyWordGameUI {
 
             String input = "";
             while (input.length() == 0) {
-                if (s.hasNext())
+                if (s.hasNext()) {
                     input = s.nextLine();
+                }
             }
             input = input.trim();
-
             p.fillWordEntry(input);
         }
     }
 
-    //EFFECTS: prints out all phrases in this game
+    // EFFECTS: prints out all phrases in this game
     private void printSillyGame() {
-        for(Phrase p : wordGame.getAllPhrases())
+        for(Phrase p : wordGame.getAllPhrases()) {
             System.out.println(p.toString());
+        }
     }
 
-    //EFFECTS: prints out the correct description for the next word needed
+    // EFFECTS: prints out the correct description for the next word needed
     private void printWordInputDescription(WordEntry w) {
         StringBuilder str = new StringBuilder(w.getType().getInstructions());
         String desc = w.getDescription();
@@ -59,4 +59,6 @@ public class SillyWordGameUI {
         str.append(": ");
         System.out.println(str.toString());
     }
+
+
 }
