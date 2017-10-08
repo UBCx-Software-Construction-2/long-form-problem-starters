@@ -16,7 +16,7 @@ public class CoffeeMaker {
         return 0;
     }
 
-    // EFFECTS: return true iff there are coffee cups remaining
+    // EFFECTS: return true if there are coffee cups remaining
     public boolean areCupsRemaining() {
         // TODO: complete the implementation of this method
         return false;
