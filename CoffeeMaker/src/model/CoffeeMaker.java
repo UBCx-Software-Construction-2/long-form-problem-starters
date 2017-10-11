@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * A coffee maker used to train baristas.
+ *
+ * Class invariant: cups remaining >= 0, time since last brew >= 0
+ */
+
 public class CoffeeMaker {
 
     public CoffeeMaker(){
@@ -28,7 +34,7 @@ public class CoffeeMaker {
         // TODO: complete the implementation of this method
     }
 
-    //REQUIRES: beans between 2.40 and 2.60 cups, water between 14.9 and 15.1 cups
+    //REQUIRES: beans between 2.40 and 2.60 cups, water > 14.75 cups
     //EFFECTS: sets cups remaining to full (20 cups) and time since last brew to 0
     public void brew(double beans, double water){
         // TODO: complete the implementation of this method
