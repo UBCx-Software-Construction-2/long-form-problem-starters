@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" filepath="$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" />
       <module fileurl="file://$PROJECT_DIR$/FitLifeGymChainOOD/FitLifeGymChainOOD.iml" filepath="$PROJECT_DIR$/FitLifeGymChainOOD/FitLifeGymChainOOD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PetPairsStarter/PetPairsStarter.iml" filepath="$PROJECT_DIR$/PetPairsStarter/PetPairsStarter.iml" />
     </modules>
   </component>
 </project>
