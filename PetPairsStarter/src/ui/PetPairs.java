@@ -33,6 +33,8 @@ public class PetPairs {
 
         PetStore store = new PetStore();
         store.addPet(dog);
+        store.addPet(parrot);
+        store.addPet(cat);
 
         System.out.println();
 
