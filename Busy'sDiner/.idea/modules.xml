@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Busy'sDiner.iml" filepath="$PROJECT_DIR$/.idea/Busy'sDiner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Busy'sDiner1/Busy'sDiner1.iml" filepath="$PROJECT_DIR$/Busy'sDiner1/Busy'sDiner1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Busy'sDiner2/Busy'sDiner2.iml" filepath="$PROJECT_DIR$/Busy'sDiner2/Busy'sDiner2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Busy'sDiner3/Busy'sDiner3.iml" filepath="$PROJECT_DIR$/Busy'sDiner3/Busy'sDiner3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Busy'sDinerComplete/Busy'sDinerComplete.iml" filepath="$PROJECT_DIR$/Busy'sDinerComplete/Busy'sDinerComplete.iml" />
+    </modules>
+  </component>
+</project>
