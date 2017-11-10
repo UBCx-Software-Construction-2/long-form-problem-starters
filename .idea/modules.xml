@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ConsoleArcade/BingoStarter/BingoStarter.iml" filepath="$PROJECT_DIR$/ConsoleArcade/BingoStarter/BingoStarter.iml" />
       <module fileurl="file://$PROJECT_DIR$/Busy'sDiner/Busy'sDiner1/Busy'sDiner1.iml" filepath="$PROJECT_DIR$/Busy'sDiner/Busy'sDiner1/Busy'sDiner1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Busy'sDiner/Busy'sDiner2/Busy'sDiner2.iml" filepath="$PROJECT_DIR$/Busy'sDiner/Busy'sDiner2/Busy'sDiner2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Busy'sDiner/Busy'sDiner3/Busy'sDiner3.iml" filepath="$PROJECT_DIR$/Busy'sDiner/Busy'sDiner3/Busy'sDiner3.iml" />
       <module fileurl="file://$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" filepath="$PROJECT_DIR$/CoffeeMaker/CoffeeMaker.iml" />
       <module fileurl="file://$PROJECT_DIR$/FitLifeGymChainOOD/FitLifeGymChainOOD.iml" filepath="$PROJECT_DIR$/FitLifeGymChainOOD/FitLifeGymChainOOD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ConsoleArcade/MonsterMazeStarter/MonsterMazeStarter.iml" filepath="$PROJECT_DIR$/ConsoleArcade/MonsterMazeStarter/MonsterMazeStarter.iml" />
       <module fileurl="file://$PROJECT_DIR$/PetPairsStarter/PetPairsStarter.iml" filepath="$PROJECT_DIR$/PetPairsStarter/PetPairsStarter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ConsoleArcade/SillyWordGameStarter/SillyWordGameStarter.iml" filepath="$PROJECT_DIR$/ConsoleArcade/SillyWordGameStarter/SillyWordGameStarter.iml" />
     </modules>
   </component>
 </project>
