@@ -21,6 +21,7 @@ public class BingoUI {
 
 
     public BingoUI() throws InterruptedException {
+
         game = new Game();
         playerCard = new PlayerCard();
 
@@ -55,6 +56,9 @@ public class BingoUI {
             TimeUnit.MILLISECONDS.sleep(100);
             printPlayerCard(playerCard);
             TimeUnit.MILLISECONDS.sleep(500);
+
+            //TODO: remove this call
+            game.refreshGameOver();
         }
         if (playerCard.hasBingo()){
             System.out.println("\nCongratulations! You win!");

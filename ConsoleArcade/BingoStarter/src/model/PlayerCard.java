@@ -1,24 +1,25 @@
 package model;
 
-import model.observer_pattern.Observer;
-import model.random.BingoCall;
+import model.random.BingoNumber;
 import model.random.NumberSquare;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static model.Game.CARD_SIZE;
-import static model.Game.SIDE_LENGTH;
 
 //TODO: implement Observer pattern
 public class PlayerCard {
 
     private List<NumberSquare> numbers;
+    private List<Collection<Integer>> colIndices;
+    private List<Collection<Integer>> rowIndices;
+    private List<Collection<Integer>> diagonalIndices;
     private int numberSquaresStamped;
     private boolean hasBingo;
 
     public PlayerCard(){
         numbers = new ArrayList<>();
+        populateIndices();
 
         for(int i=0; i < CARD_SIZE; i++){
             numbers.add(new NumberSquare());
@@ -29,7 +30,7 @@ public class PlayerCard {
     //MODIFIES: this
     //EFFECTS: checks whether bingo call matches a square in this card, stamps if so, and updates hasBingo
     public void checkCallMatch(Object o){
-        BingoCall bc = (BingoCall) o;
+        BingoNumber bc = (BingoNumber) o;
         int i = numberSquaresMatch(bc);
         for (int j=0; j < i; j++) {
             int index = getSquareIndexOfNextUnstamped(bc);
@@ -51,53 +52,13 @@ public class PlayerCard {
 
     //EFFECTS: returns true if player has a fully stamped column, row or diagonal
     private void checkIfBingo(int i){
-        hasBingo = columnBingo(i) || rowBingo(i) || diagonalBingo(i);
-    }
-
-    //EFFECTS: checks all indices in column of index to check whether player has bingo in column
-    private boolean columnBingo(int index){
-        int colIndices[] = generateColumnIndices(index);
-        boolean bingo = true;
-        for (int i=0; i < SIDE_LENGTH; i++) {
-            if (!numbers.get(colIndices[i]).isStamped()) {
-                bingo = false;
-                break;
-            }
-        }
-        return bingo;
-    }
-
-    //EFFECTS: checks all indices in row of index to check whether player has bingo in row
-    private boolean rowBingo(int index) {
-        int rowIndices[] = generateRowIndices(index);
-        boolean bingo = true;
-        for (int i=0; i < SIDE_LENGTH; i++)
-            if (!numbers.get(rowIndices[i]).isStamped()){
-                bingo = false;
-                break;
-            }
-        return bingo;
-    }
-
-    //EFFECTS: if index is on a diagonal, checks whether diagonal bingo is achieved
-    private boolean diagonalBingo(int index) {
-        int diagonalIndices[] = getDiagonalIndices(index);
-        if (diagonalIndices.length != 0) {
-            boolean bingo = true;
-            for (int diagonalIndex : diagonalIndices) {
-                if (!numbers.get(diagonalIndex).isStamped()) {
-                    bingo = false;
-                    break;
-                }
-            }
-            return bingo;
-        } else {
-            return false;
-        }
+        hasBingo =  isBingoSequence(i, rowIndices) ||
+                    isBingoSequence(i, colIndices) ||
+                    isBingoSequence(i, diagonalIndices);
     }
 
     //EFFECTS: returns the number of squares in bc's column that match bc's number
-    private int numberSquaresMatch(BingoCall bc){
+    private int numberSquaresMatch(BingoNumber bc){
         int i = 0;
         int match = bc.getNumber();
         for (int j = getColumnFromBC(bc); j < CARD_SIZE; j+=5) {
@@ -109,8 +70,8 @@ public class PlayerCard {
     }
 
     //EFFECTS: finds index of next unstamped square that matches column and number of bc
-    //         throws IllegalArgumentException if there is no NumberSquare with same number as bc
-    private int getSquareIndexOfNextUnstamped(BingoCall bc) {
+    //         throws IllegalStateException if there is no NumberSquare with same number as bc
+    private int getSquareIndexOfNextUnstamped(BingoNumber bc) {
         int column = getColumnFromBC(bc);
         int match = bc.getNumber();
         for (int i=column; i < CARD_SIZE; i += 5){
@@ -119,7 +80,7 @@ public class PlayerCard {
                 return i;
             }
         }
-        throw new IllegalArgumentException("Number of matching squares exceeded unstamped squares.");
+        throw new IllegalStateException("Number of matching squares exceeded unstamped squares.");
     }
 
     //MODIFIES: this
@@ -130,7 +91,7 @@ public class PlayerCard {
     }
 
     //EFFECTS: returns the column index of bc
-    private int getColumnFromBC(BingoCall bc){
+    private int getColumnFromBC(BingoNumber bc){
         switch(bc.getLetter()) {
             case 'B':
                 return 0;
@@ -145,77 +106,91 @@ public class PlayerCard {
         }
     }
 
-    //EFFECTS: generates indices of other squares in same row as index
-    private int[] generateRowIndices(int index){
-        int rowIndices[] = new int[SIDE_LENGTH];
-        int arrayIndex = 0;
-
-        switch (index % SIDE_LENGTH) {
-            case 0:
-                for (int i=0; i < SIDE_LENGTH; i++) { rowIndices[arrayIndex] = index+i; arrayIndex++; }
+    //EFFECTS: returns true if this index and all other indices in its collection are stamped
+    private boolean isBingoSequence(int index, List<Collection<Integer>> allIndices) {
+        Collection<Integer> coll = getIndicesForIndex(index, allIndices);
+        if (coll == null)
+            return false;
+        boolean bingo = true;
+        for (Integer i : coll) {
+            if (!numbers.get(i).isStamped()) {
+                bingo = false;
                 break;
-            case 1:
-                for (int i=-1; i < SIDE_LENGTH-1; i++) { rowIndices[arrayIndex] = index+i; arrayIndex++; }
-                break;
-            case 2:
-                for (int i=-2; i < SIDE_LENGTH-2; i++) { rowIndices[arrayIndex] = index+i; arrayIndex++; }
-                break;
-            case 3:
-                for (int i=-3; i < SIDE_LENGTH-3; i++) { rowIndices[arrayIndex] = index+i; arrayIndex++; }
-                break;
-            case 4:
-                for (int i=-4; i < SIDE_LENGTH-4; i++) { rowIndices[arrayIndex] = index+i; arrayIndex++; }
-                break;
-        }
-        return rowIndices;
-    }
-
-    //EFFECTS: generates indices of other squares in same column as index
-    private int[] generateColumnIndices(int index){
-        int colIndices[] = new int[SIDE_LENGTH];
-        int arrayIndex = 0;
-
-        if (index < 5)
-            for (int i=0; i < SIDE_LENGTH; i++) { colIndices[arrayIndex] = index+(i*5); arrayIndex++; }
-        else if (index < 10)
-            for (int i=-1; i < SIDE_LENGTH-1; i++) { colIndices[arrayIndex] = index+(i*5); arrayIndex++; }
-        else if (index < 15)
-            for (int i = -2; i < SIDE_LENGTH - 2; i++) { colIndices[arrayIndex] = index + (i * 5); arrayIndex++; }
-        else if (index < 20)
-            for (int i=-3; i < SIDE_LENGTH-3; i++) { colIndices[arrayIndex] = index+(i*5); arrayIndex++; }
-        else
-            for (int i=-4; i < SIDE_LENGTH-4; i++) { colIndices[arrayIndex] = index+(i*5); arrayIndex++; }
-
-        return colIndices;
-    }
-
-    //EFFECTS: returns true if index is a diagonal index
-    private boolean isDiagonalIndex(int index) {
-        return (index % (SIDE_LENGTH+1)) == 0 || (index % (SIDE_LENGTH-1)) == 0;
-    }
-
-    //EFFECTS: generates indices of other squares in same diagonal as index (0 indices if not diagonal)
-    private int[] getDiagonalIndices(int index) {
-        int diagonalIndices[] = new int[0];
-
-        if (isDiagonalIndex(index)) {
-            diagonalIndices = new int[SIDE_LENGTH];
-
-            int arrayIndex = 0;
-            int modFactor = (index % SIDE_LENGTH + 1) == 0 ? SIDE_LENGTH + 1 : SIDE_LENGTH - 1;
-
-            if (modFactor == SIDE_LENGTH - 1) {
-                for (int i = modFactor; i < CARD_SIZE; i++)
-                    if (i % modFactor == 0)
-                        diagonalIndices[arrayIndex] = i;
-            } else {
-                for (int i = 0; i < CARD_SIZE; i++)
-                    if (i % modFactor == 0)
-                        diagonalIndices[arrayIndex] = i;
             }
         }
-
-        return diagonalIndices;
+        return bingo;
     }
+
+    //EFFECTS: returns the collection in allIndices containing index
+    private Collection<Integer> getIndicesForIndex(int index, List<Collection<Integer>> allIndices) {
+        for (Collection<Integer> c: allIndices) {
+            if (c.contains(index))
+                return c;
+        }
+        return null;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: populates the row, column and diagonal indices to contain all valid indices
+    private void populateIndices() {
+        rowIndices = new ArrayList<>();
+        colIndices = new ArrayList<>();
+        diagonalIndices = new ArrayList<>();
+        populateRows();
+        populateCols();
+        populateDiagonals();
+    }
+
+
+    /*   NOTE: Why are we hard-coding this?
+     *   We could make an effort to generalize to a board of arbitrary size,
+     *   but since B-I-N-G-O has 5 letters, it's probably safe to leave these numbers here.
+     */
+    //MODIFIES: this
+    //EFFECTS: adds all rows to row indices collection
+    private void populateRows() {
+        Integer[] row0 = {0, 1, 2, 3, 4};
+        Integer[] row1 = {5, 6, 7, 8, 9};
+        Integer[] row2 = {10, 11, 12, 13, 14};
+        Integer[] row3 = {15, 16, 17, 18, 19};
+        Integer[] row4 = {20, 21, 22, 23, 24};
+        addToCollection(rowIndices, row0);
+        addToCollection(rowIndices, row1);
+        addToCollection(rowIndices, row2);
+        addToCollection(rowIndices, row3);
+        addToCollection(rowIndices, row4);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds all columns to column indices collection
+    private void populateCols() {
+        Integer[] col0 = {0, 5, 10, 15, 20};
+        Integer[] col1 = {1, 6, 11, 16, 21};
+        Integer[] col2 = {2, 7, 12, 17, 22};
+        Integer[] col3 = {3, 8, 13, 18, 23};
+        Integer[] col4 = {4, 9, 14, 19, 24};
+        addToCollection(colIndices, col0);
+        addToCollection(colIndices, col1);
+        addToCollection(colIndices, col2);
+        addToCollection(colIndices, col3);
+        addToCollection(colIndices, col4);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds all diagonal rows to diagonal indices collection
+    private void populateDiagonals() {
+        Integer[] diag0 = {0, 6, 12, 18, 24};
+        Integer[] diag1 = {4, 8, 12, 16, 20};
+        addToCollection(diagonalIndices, diag0);
+        addToCollection(diagonalIndices, diag1);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds a set of indices to the given collection
+    private void addToCollection(List<Collection<Integer>> coll, Integer[] arr) {
+        HashSet<Integer> indices = new HashSet<>(Arrays.asList(arr));
+        coll.add(indices);
+    }
+
 
 }

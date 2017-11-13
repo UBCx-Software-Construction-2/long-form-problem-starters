@@ -6,11 +6,11 @@ import java.util.Random;
 
 import static model.Game.SIDE_LENGTH;
 
-public class BingoCall extends RandomNumber {
+public class BingoNumber extends RandomNumber {
 
     private char letter;
 
-    public BingoCall(){
+    public BingoNumber(){
         super();
         generateLetter();
     }
