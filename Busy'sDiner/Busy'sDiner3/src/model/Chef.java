@@ -32,7 +32,7 @@ public class Chef {
         System.out.print(PREFIX);
 
         int i = 1;
-        for (String s : this.order.getOrderIngredients()) {
+        for (String s : this.order.getDishIngredients()) {
 
             //NOTE: the next three lines included only for pretty formatting!
             if (i % 5 == 0)
@@ -48,7 +48,7 @@ public class Chef {
     //EFFECTS: prints out the recipe being followed
     private void followRecipe() {
         System.out.println(PREFIX + "Following recipe: ");
-        System.out.println(this.order.getOrderRecipe());
+        System.out.println(this.order.getDishRecipe());
     }
 
     //EFFECTS: prints out a message about cooking food

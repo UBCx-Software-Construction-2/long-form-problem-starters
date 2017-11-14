@@ -31,12 +31,12 @@ public class Order {
     }
 
     //EFFECTS: returns the recipe to follow for this order
-    public String getOrderRecipe() {
+    public String getDishRecipe() {
         return dish.getRecipe();
     }
 
     //EFFECTS: returns a list of ingredients needed for this order
-    public List<String> getOrderIngredients() {
+    public List<String> getDishIngredients() {
         return dish.getIngredients();
     }
 
