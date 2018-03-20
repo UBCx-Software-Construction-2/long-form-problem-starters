@@ -31,7 +31,6 @@ public class MonsterMaze {
 
         r3.addMonster(m3);
 
-        r4.addRoom(r3);
         r4.addRoom(r5);
 
         r5.addMonster(m2);
