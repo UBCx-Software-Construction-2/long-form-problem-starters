@@ -22,6 +22,6 @@ public abstract class Subject {
     }
 
     //EFFECTS: notifies observers of state change
-    public abstract void notifyObservers();
+    public void notifyObservers(){ }
 
 }
