@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FitnessClass {
 
-    private static final int maxParticipants = 20;
+    private static final int MAX_PARTICIPANTS = 20;
 
     private String className;
     private String dayAndTime;
@@ -32,7 +32,7 @@ public class FitnessClass {
         return registered;
     }
 
-    public int getMaxParticipants() { return maxParticipants; }
+    public int getMaxParticipants() { return MAX_PARTICIPANTS; }
 
     //REQUIRES: className != null
     //MODIFIES: this
@@ -52,7 +52,7 @@ public class FitnessClass {
     //MODIFIES: this
     //EFFECTS: registers given member for this class
     public void registerMember(Member m){
-        if (registered.size() < maxParticipants) {
+        if (registered.size() < MAX_PARTICIPANTS) {
             registered.add(m);
         } else {
             System.out.println("Sorry, this class is already full.");
